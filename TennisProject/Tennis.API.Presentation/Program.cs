@@ -2,8 +2,8 @@ using Tennis.API.Infrastructure.Interfaces;
 using Tennis.API.Infrastructure;
 using Tennis.API.Services.Interfaces;
 using Tennis.API.Services;
-using Tennis.API.Shared.Models;
 using Microsoft.OpenApi.Models;
+using Tennis.API.Shared.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 // Bind Options

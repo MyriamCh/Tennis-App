@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Tennis.API.Infrastructure.Interfaces;
 using Tennis.API.Shared.Models;
+using Tennis.API.Shared.Options;
 
 namespace Tennis.API.Infrastructure;
 public class PlayerRepository : IPlayerRepository
