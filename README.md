@@ -3,6 +3,38 @@
 A REST API to manage tennis players data, built with .NET Core. This API allows users to retrieve a list of players, get details about a specific player, and obtain global statistics.
 
 ## Project Architecture
+TennisProject/
+├── Tennis.API.Presentation/
+│   ├── Controllers/
+│   │   └── PlayersController.cs    
+│   ├── Program.cs                  
+│   └── appsettings.json           
+
+├── Tennis.API.Services/
+│   ├── Interfaces/
+│   │   └── IPlayerService.cs     
+│   └── PlayerService.cs            
+
+├── Tennis.API.Infrastructure/
+│   ├── Interfaces/
+│   │   └── IPlayerRepository.cs   
+│   └── PlayerRepository.cs
+
+├── Tennis.API.Shared/
+│   ├── Models/
+│   │   └── Player.cs               
+│   │   └── Contry.cs  
+│   │   └── PlayerData.cs 
+│   └── Dtos/
+│       ├── PlayerDto.cs
+│       └── CreatePlayerDto.cs    
+│   └── Options/
+│   │   └── PlayerApiOptions.cs 
+
+├── Tennis.API.Tests/
+│   └── PlayerServiceTests.cs     
+
+
 
 The project follows a well-defined layered architecture:
 
