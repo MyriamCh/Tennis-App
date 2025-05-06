@@ -1,5 +1,4 @@
 name: Deploy Tennis WebAPI to Azure Free Tier
-
 on:
   push:
     branches: [ main ]
@@ -16,40 +15,31 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+      
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-
+      
     - name: Publish .NET Project
       run: |
         dotnet publish TennisProject/Tennis.API.Presentation -c Release -o ./publish
-
-    - name: Azure CLI Login
-      uses: azure/CLI@v1
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az login --service-principal \
-            --username ${{ secrets.AZURE_APP_ID }} \
-            --password ${{ secrets.AZURE_PASSWORD }} \
-            --tenant ${{ secrets.AZURE_TENANT_ID }}
-          az account show  # Vérifie que la connexion est réussie
-
+        
     - name: Create ZIP package
       run: |
         cd ./publish
-        zip -r ../app.zip .  # Crée l'archive ZIP
-        cd ..  # Reviens au répertoire racine
-        ls -al  # Affiche le contenu pour vérifier que app.zip a bien été créé
-
-    - name: Deploy using Azure CLI
-      uses: azure/CLI@v1
+        zip -r ../app.zip .
+        cd ..
+        
+    - name: Azure Login
+      uses: azure/login@v1
       with:
-        azcliversion: latest
-        inlineScript: |
-          az webapp deployment source config-zip \
-            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
-            --name ${{ env.AZURE_WEBAPP_NAME }} \
-            --src app.zip
+        client-id: ${{ secrets.AZURE_APP_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        client-secret: ${{ secrets.AZURE_PASSWORD }}
+        
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ./app.zip
