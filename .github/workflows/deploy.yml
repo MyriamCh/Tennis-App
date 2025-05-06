@@ -31,7 +31,6 @@ jobs:
         zip -r ../app.zip .
         cd ..
 
-    # Utilisation de la commande Azure CLI directement
     - name: Azure Login with CLI
       run: |
         az login --service-principal \
