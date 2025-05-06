@@ -1,0 +1,41 @@
+# Visual Studio
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+*.log
+
+# Test results
+TestResults/
+
+# NuGet
+*.nupkg
+packages/
+*.snupkg
+
+# Rider
+.idea/
+
+# Mac / Windows system files
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+
+# User-specific files
+*.swp
+*.bak
+*.tmp
+
+# JetBrains Rider
+.idea/
+*.sln.iml
