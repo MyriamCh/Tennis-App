@@ -7,11 +7,8 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: tennis-api-webapp
+  AZURE_RESOURCE_GROUP: reg_apps  # Ajoutez votre nom de groupe de ressources
   DOTNET_VERSION: '8.x'
-
-permissions:
-  id-token: write
-  contents: read
 
 jobs:
   deploy:
@@ -28,10 +25,15 @@ jobs:
       run: |
         dotnet publish TennisProject/Tennis.API.Presentation -c Release -o ./publish
     
-    - name: Login to Azure
-      uses: azure/login@v1
+    - name: Azure CLI Login
+      uses: azure/CLI@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        azcliversion: latest
+        inlineScript: |
+          az login --service-principal \
+            --username ${{ secrets.AZURE_APP_ID }} \
+            --password ${{ secrets.AZURE_PASSWORD }} \
+            --tenant ${{ secrets.AZURE_TENANT_ID }}
     
     - name: Create ZIP package
       run: |
@@ -40,5 +42,11 @@ jobs:
         cd ..
     
     - name: Deploy using Azure CLI
-      run: |
-        az webapp deployment source config-zip --name ${{ env.AZURE_WEBAPP_NAME }} --src app.zip
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az webapp deployment source config-zip \
+            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --src app.zip
