@@ -37,5 +37,5 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.MapGet("/", () => "Tennis API is running");
+
 app.Run();
