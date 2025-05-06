@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tennis.API.Infrastructure\Tennis.API.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

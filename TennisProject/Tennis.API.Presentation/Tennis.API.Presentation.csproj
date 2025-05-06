@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tennis.API.Services\Tennis.API.Services.csproj" />
+    <ProjectReference Include="..\Tennis.API.Shared\Tennis.API.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
