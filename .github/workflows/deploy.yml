@@ -7,24 +7,25 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: tennis-api-webapp
-  AZURE_RESOURCE_GROUP: reg_apps  # Ajoutez votre nom de groupe de ressources
+  AZURE_RESOURCE_GROUP: reg_apps  
   DOTNET_VERSION: '8.x'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-    
+
     - name: Publish .NET Project
       run: |
         dotnet publish TennisProject/Tennis.API.Presentation -c Release -o ./publish
-    
+
     - name: Azure CLI Login
       uses: azure/CLI@v1
       with:
@@ -34,13 +35,15 @@ jobs:
             --username ${{ secrets.AZURE_APP_ID }} \
             --password ${{ secrets.AZURE_PASSWORD }} \
             --tenant ${{ secrets.AZURE_TENANT_ID }}
-    
+          az account show  # Vérifie que la connexion est réussie
+
     - name: Create ZIP package
       run: |
         cd ./publish
-        zip -r ../app.zip .
-        cd ..
-    
+        zip -r ../app.zip .  # Crée l'archive ZIP
+        cd ..  # Reviens au répertoire racine
+        ls -al  # Affiche le contenu pour vérifier que app.zip a bien été créé
+
     - name: Deploy using Azure CLI
       uses: azure/CLI@v1
       with:
